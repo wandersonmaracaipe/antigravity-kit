@@ -1,0 +1,6 @@
+{
+  "bugfix": 80,
+  "feature": 85,
+  "deploy": 90,
+  "orchestrate": 88
+}

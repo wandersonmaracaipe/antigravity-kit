@@ -1,0 +1,20 @@
+[
+  {
+    "id": "bk-001",
+    "prompt": "criar API segura em Laravel com autenticação JWT",
+    "expected_agents": ["backend-specialist", "security-auditor"],
+    "profile": "feature"
+  },
+  {
+    "id": "bk-002",
+    "prompt": "corrigir bug crítico de performance no app Flutter",
+    "expected_agents": ["mobile-developer", "performance-optimizer"],
+    "profile": "bugfix"
+  },
+  {
+    "id": "bk-003",
+    "prompt": "auditar código legado em Delphi para modernização",
+    "expected_agents": ["code-archaeologist"],
+    "profile": "orchestrate"
+  }
+]

@@ -10,6 +10,15 @@ version: 1.0.0
 
 ## Core Principle
 
+## 0. Natural Language First Policy
+
+Users should be able to type natural language requests directly.
+
+- Do NOT require slash commands for normal usage.
+- Infer workflow intent (`/plan`, `/create`, `/debug`, `/test`) automatically.
+- Use slash commands only as optional explicit overrides.
+
+
 > **The AI should act as an intelligent Project Manager**, analyzing each request and automatically selecting the best specialist(s) for the job.
 
 ## How It Works
@@ -105,7 +114,10 @@ function analyzeRequest(userMessage) {
 | **Security**    | auth, login, jwt, password, hash, token    | `security-auditor`      |
 | **Frontend**    | component, react, vue, css, html, tailwind | `frontend-specialist`   |
 | **Backend**     | api, server, express, fastapi, node        | `backend-specialist`    |
+| **Laravel/PHP** | laravel, php, eloquent, artisan, composer  | `backend-specialist`    |
+| **Go/Golang**   | golang, go routine, gin, fiber, go module  | `backend-specialist`    |
 | **Mobile**      | react native, flutter, ios, android, expo  | `mobile-developer`      |
+| **Delphi/Pascal** | delphi, pascal, object pascal, vcl, firemonkey | `code-archaeologist` |
 | **Database**    | prisma, sql, mongodb, schema, migration    | `database-architect`    |
 | **Testing**     | test, jest, vitest, playwright, cypress    | `test-engineer`         |
 | **DevOps**      | docker, kubernetes, ci/cd, pm2, nginx      | `devops-engineer`       |
@@ -188,6 +200,26 @@ User: "Use @backend-specialist to review this"
 → Override auto-selection
 → Use explicitly mentioned agent
 ```
+
+
+## 5. Confidence Routing (Recommended)
+
+Use structured scoring before final routing when ambiguity exists:
+
+```bash
+python .agent/scripts/routing_score.py "<user request>"
+```
+
+Expected output fields:
+- `selected_agents[]`
+- `confidence` (0.00-1.00)
+- `needs_clarification` (boolean)
+- `rationale`
+
+Policy:
+- If `confidence < 0.55` → ask 1-2 clarifying questions
+- If `confidence >= 0.55` and single-domain → invoke top agent
+- If multi-domain high confidence → invoke orchestrator or top 2-3 agents
 
 ## Edge Cases
 

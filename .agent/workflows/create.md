@@ -57,3 +57,24 @@ If request is unclear, ask these questions:
 - Who will use it?
 
 Use defaults, add details later.
+
+
+## 🧭 Routing + Memory + Gate (NEW)
+
+### 1) Route confidence first
+
+```bash
+python .agent/scripts/routing_score.py "$ARGUMENTS"
+```
+
+### 2) Log key architecture decision (ADR)
+
+```bash
+python .agent/scripts/knowledge_manager.py add   --type adr   --title "initial stack decision"   --content "Document chosen stack and rationale for this create flow"
+```
+
+### 3) Run final delivery quality gate
+
+```bash
+python .agent/scripts/quality_gate.py   --input .agent/quality/sample.json   --profile deploy   --thresholds .agent/quality/thresholds.json
+```

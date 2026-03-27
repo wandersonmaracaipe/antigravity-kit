@@ -10,6 +10,17 @@ $ARGUMENTS
 
 ## 🔴 CRITICAL RULES
 
+## 🧭 Routing Pre-Flight (NEW)
+
+Before invoking planner, score request clarity:
+
+```bash
+python .agent/scripts/routing_score.py "$ARGUMENTS"
+```
+
+If output has `needs_clarification: true`, ask 1-2 focused questions before generating plan.
+
+
 1. **NO CODE WRITING** - This command creates plan file only
 2. **Use project-planner agent** - NOT Antigravity Agent's native Plan mode
 3. **Socratic Gate** - Ask clarifying questions before planning
@@ -65,6 +76,16 @@ Next steps:
 - Run `/create` to start implementation
 - Or modify plan manually
 ```
+
+## Output Size Guard (MANDATORY)
+
+To prevent token overflow:
+
+- Return only:
+  1) generated plan filename,
+  2) 3-5 key milestones,
+  3) immediate next action.
+- Do **not** paste full plan content unless user requests it.
 
 ---
 
