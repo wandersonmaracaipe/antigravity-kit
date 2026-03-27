@@ -57,6 +57,19 @@ Agent activated → Check frontmatter "skills:" → Read SKILL.md (INDEX) → Re
 
 ### Response Format (MANDATORY)
 
+### Natural Language First (NO slash required)
+
+Default interaction is plain language:
+- User can type only what they need (no `/plan`, `/create`, etc.)
+- System must auto-route using `routing_score.py` and agent protocols
+- Slash commands are optional shortcuts, not required UX
+
+Decision hint:
+```bash
+python .agent/scripts/routing_score.py "<user request>"
+```
+
+
 When auto-applying an agent, inform the user:
 
 ```markdown
@@ -198,7 +211,7 @@ When user's prompt is NOT in English:
 - **Completion:** A task is NOT finished until `checklist.py` returns success.
 - **Reporting:** If it fails, fix the **Critical** blockers first (Security/Lint).
 
-**Available Scripts (12 total):**
+**Available Scripts (18 total):**
 
 | Script                     | Skill                 | When to Use         |
 | -------------------------- | --------------------- | ------------------- |
@@ -214,6 +227,12 @@ When user's prompt is NOT in English:
 | `mobile_audit.py`          | mobile-design         | After mobile change |
 | `lighthouse_audit.py`      | performance-profiling | Before deploy       |
 | `playwright_runner.py`     | webapp-testing        | Before deploy       |
+| `routing_score.py`         | scripts (master)      | Agent triage        |
+| `knowledge_manager.py`     | scripts (master)      | ADR/lesson memory   |
+| `quality_gate.py`          | scripts (master)      | Final release gate  |
+| `benchmark_runner.py`      | scripts (master)      | Scenario benchmark  |
+| `critic_refiner.py`        | scripts (master)      | Remediation planner |
+| `release_gold_gate.py`     | scripts (master)      | Final chained gate  |
 
 > 🔴 **Agents & Skills can invoke ANY script** via `python .agent/skills/<skill>/scripts/<script>.py`
 
