@@ -1,0 +1,8 @@
+{
+  "security": true,
+  "lint": true,
+  "tests": true,
+  "performance": false,
+  "docs": true,
+  "accessibility": true
+}

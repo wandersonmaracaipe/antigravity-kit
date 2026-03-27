@@ -9,7 +9,7 @@
 Antigravity Kit is a modular system consisting of:
 
 - **20 Specialist Agents** - Role-based AI personas
-- **36 Skills** - Domain-specific knowledge modules
+- **45 Skills** - Domain-specific knowledge modules
 - **11 Workflows** - Slash command procedures
 
 ---
@@ -20,7 +20,7 @@ Antigravity Kit is a modular system consisting of:
 .agent/
 ├── ARCHITECTURE.md          # This file
 ├── agents/                  # 20 Specialist Agents
-├── skills/                  # 36 Skills
+├── skills/                  # 45 Skills
 ├── workflows/               # 11 Slash Commands
 ├── rules/                   # Global Rules
 └── scripts/                 # Master Validation Scripts
@@ -34,12 +34,12 @@ Specialist AI personas for different domains.
 
 | Agent                    | Focus                      | Skills Used                                              |
 | ------------------------ | -------------------------- | -------------------------------------------------------- |
-| `orchestrator`           | Multi-agent coordination   | parallel-agents, behavioral-modes                        |
-| `project-planner`        | Discovery, task planning   | brainstorming, plan-writing, architecture                |
+| `orchestrator`           | Multi-agent coordination   | parallel-agents, behavioral-modes, context-engineering, uncertainty-calibration, evaluation-science |
+| `project-planner`        | Discovery, task planning   | brainstorming, plan-writing, architecture, evaluation-science, prompt-optimization |
 | `frontend-specialist`    | Web UI/UX                  | frontend-design, react-best-practices, tailwind-patterns |
-| `backend-specialist`     | API, business logic        | api-patterns, nodejs-best-practices, database-design     |
+| `backend-specialist`     | API, business logic        | api-patterns, nodejs-best-practices, go-patterns, php-laravel12, database-design     |
 | `database-architect`     | Schema, SQL                | database-design, prisma-expert                           |
-| `mobile-developer`       | iOS, Android, RN           | mobile-design                                            |
+| `mobile-developer`       | iOS, Android, RN, Flutter  | mobile-design, flutter-expert                            |
 | `game-developer`         | Game logic, mechanics      | game-development                                         |
 | `devops-engineer`        | CI/CD, Docker              | deployment-procedures, docker-expert                     |
 | `security-auditor`       | Security compliance        | vulnerability-scanner, red-team-tactics                  |
@@ -52,12 +52,12 @@ Specialist AI personas for different domains.
 | `product-manager`        | Requirements, user stories | plan-writing, brainstorming                              |
 | `product-owner`          | Strategy, backlog, MVP     | plan-writing, brainstorming                              |
 | `qa-automation-engineer` | E2E testing, CI pipelines  | webapp-testing, testing-patterns                         |
-| `code-archaeologist`     | Legacy code, refactoring   | clean-code, code-review-checklist                        |
+| `code-archaeologist`     | Legacy code, refactoring   | clean-code, delphi-pascal, code-review-checklist         |
 | `explorer-agent`         | Codebase analysis          | -                                                        |
 
 ---
 
-## 🧩 Skills (36)
+## 🧩 Skills (45)
 
 Modular knowledge domains that agents can load on-demand. based on task context.
 
@@ -79,6 +79,8 @@ Modular knowledge domains that agents can load on-demand. based on task context.
 | `nestjs-expert`         | NestJS modules, DI, decorators |
 | `nodejs-best-practices` | Node.js async, modules         |
 | `python-patterns`       | Python standards, FastAPI      |
+| `go-patterns`           | Go services, concurrency, APIs |
+| `php-laravel12`         | Laravel 12 architecture and APIs |
 
 ### Database
 
@@ -131,7 +133,8 @@ Modular knowledge domains that agents can load on-demand. based on task context.
 
 | Skill           | Description           |
 | --------------- | --------------------- |
-| `mobile-design` | Mobile UI/UX patterns |
+| `mobile-design`  | Mobile UI/UX patterns           |
+| `flutter-expert`| Flutter architecture/performance |
 
 ### Game Development
 
@@ -165,6 +168,10 @@ Modular knowledge domains that agents can load on-demand. based on task context.
 | `i18n-localization`       | Internationalization      |
 | `performance-profiling`   | Web Vitals, optimization  |
 | `systematic-debugging`    | Troubleshooting           |
+| `context-engineering`     | Context packaging and retrieval strategy |
+| `uncertainty-calibration` | Confidence calibration and abstention policy |
+| `evaluation-science`      | Benchmark methodology and metrics discipline |
+| `prompt-optimization`     | Prompt refinement with evaluation loops |
 
 ---
 
@@ -217,7 +224,7 @@ skill-name/
 
 ---
 
-## � Scripts (2)
+## 🧪 Scripts (11)
 
 Master validation scripts that orchestrate skill-level scripts.
 
@@ -225,8 +232,17 @@ Master validation scripts that orchestrate skill-level scripts.
 
 | Script          | Purpose                                 | When to Use              |
 | --------------- | --------------------------------------- | ------------------------ |
-| `checklist.py`  | Priority-based validation (Core checks) | Development, pre-commit  |
-| `verify_all.py` | Comprehensive verification (All checks) | Pre-deployment, releases |
+| `checklist.py`       | Priority-based validation (Core checks)      | Development, pre-commit  |
+| `verify_all.py`      | Comprehensive verification (All checks)      | Pre-deployment, releases |
+| `integrity_audit.py` | Validates .agent integrity (skills/scripts)  | Maintenance, CI checks   |
+| `session_manager.py` | Project stack and feature discovery           | Session bootstrap        |
+| `auto_preview.py`    | Local preview process management              | Local preview workflows  |
+| `routing_score.py`   | Confidence-based agent routing suggestions     | Request triage           |
+| `knowledge_manager.py` | Manage long-term ADR/postmortem knowledge    | Continuous learning      |
+| `quality_gate.py`    | Weighted quality score + threshold enforcement | Final delivery gate      |
+| `benchmark_runner.py` | Scenario benchmark harness for routing/quality | Continuous evaluation    |
+| `critic_refiner.py`   | Prioritized remediation plan from quality gaps | Auto-improvement loop    |
+| `release_gold_gate.py` | Final chained gate for release readiness        | Golden release gate      |
 
 ### Usage
 
@@ -267,9 +283,9 @@ For details, see [scripts/README.md](scripts/README.md)
 | Metric              | Value                         |
 | ------------------- | ----------------------------- |
 | **Total Agents**    | 20                            |
-| **Total Skills**    | 36                            |
+| **Total Skills**    | 45                            |
 | **Total Workflows** | 11                            |
-| **Total Scripts**   | 2 (master) + 18 (skill-level) |
+| **Total Scripts**   | 11 (master) + 18 (skill-level) |
 | **Coverage**        | ~90% web/mobile development   |
 
 ---
