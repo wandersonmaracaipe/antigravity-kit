@@ -60,6 +60,7 @@ def main() -> int:
     parser.add_argument("--threshold", type=int, default=85)
     parser.add_argument("--profile", choices=["bugfix", "feature", "deploy", "orchestrate"], help="Threshold profile")
     parser.add_argument("--thresholds", help="JSON file with profile thresholds")
+
     args = parser.parse_args()
 
     data = json.loads(Path(args.input).read_text(encoding="utf-8"))
