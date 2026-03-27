@@ -41,11 +41,7 @@ def run_quality(profile: str, quality_input: str, thresholds: str) -> dict:
     ]
     result = subprocess.run(cmd, capture_output=True, text=True, check=False)
     payload = {}
-    raw = (result.stdout or result.stderr).strip()
-    try:
-        payload = json.loads(raw)
-    except Exception:
-        payload = {"raw": raw}
+
     payload["passed"] = result.returncode == 0
     return payload
 
@@ -82,8 +78,6 @@ def main() -> int:
                 "quality_passed": quality.get("passed", False),
                 "quality_score": quality.get("score"),
                 "quality_threshold": quality.get("threshold"),
-                "quality_failed_checks": quality.get("failed", []),
-                "quality_required_failed": quality.get("required_failed", []),
             }
         )
 
