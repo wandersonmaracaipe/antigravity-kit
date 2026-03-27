@@ -108,6 +108,21 @@ When auto-applying an agent, inform the user:
 
 ## TIER 0: UNIVERSAL RULES (Always Active)
 
+### 📏 Token Budget & Output Limits (NEW - MANDATORY)
+
+To avoid runtime failures like `"The model's generation exceeded the maximum output token limit"`:
+
+1. **Default concise mode:** Prefer compact answers unless user explicitly asks for deep detail.
+2. **Hard output cap:** Target **<= 700 tokens** per response by default.
+3. **Chunking rule:** If full answer may exceed cap, return:
+   - Part 1: executive summary + highest-priority actions
+   - Ask: `"Continue with part 2?"` before sending more
+4. **No long boilerplate:** Avoid repeating agent/routing explanations unless needed for correctness.
+5. **Code diffs over full files:** When possible, share minimal patch/snippet only.
+6. **List compression:** Use top 3-7 bullets, not exhaustive dumps.
+
+**Priority exception:** If user explicitly requests exhaustive output, provide it in numbered parts (Part 1/N, 2/N, ...).
+
 ### 🌐 Language Handling
 
 When user's prompt is NOT in English:

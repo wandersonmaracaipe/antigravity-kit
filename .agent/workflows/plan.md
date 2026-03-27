@@ -77,6 +77,16 @@ Next steps:
 - Or modify plan manually
 ```
 
+## Output Size Guard (MANDATORY)
+
+To prevent token overflow:
+
+- Return only:
+  1) generated plan filename,
+  2) 3-5 key milestones,
+  3) immediate next action.
+- Do **not** paste full plan content unless user requests it.
+
 ---
 
 ## Naming Examples

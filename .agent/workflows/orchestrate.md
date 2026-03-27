@@ -233,6 +233,14 @@ Combine all agent outputs into unified report.
 [One paragraph synthesis of all agent work]
 ```
 
+### Output Size Guard (MANDATORY)
+
+If the orchestration report is too long, send in parts:
+
+1. **First response:** Task, mode, invoked agents, verification status, and top 3 findings.
+2. **Then ask:** `Continue with implementation details and full checklist?`
+3. Only provide remaining sections after user confirmation.
+
 ---
 
 ## 🔴 EXIT GATE
