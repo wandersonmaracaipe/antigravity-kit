@@ -38,6 +38,19 @@ $ARGUMENTS
 
 ## Pre-Flight: Mode Check
 
+## 🧭 Routing Confidence Gate (NEW)
+
+Run routing confidence before selecting agents:
+
+```bash
+python .agent/scripts/routing_score.py "$ARGUMENTS"
+```
+
+Policy:
+- `needs_clarification=true` → ask clarifying questions first
+- high confidence + multi-domain → orchestrator with 3+ agents
+
+
 | Current Mode | Task Type | Action |
 |--------------|-----------|--------|
 | **plan** | Any | ✅ Proceed with planning-first approach |
@@ -235,3 +248,14 @@ Before completing orchestration, verify:
 ---
 
 **Begin orchestration now. Select 3+ agents, execute sequentially, run verification scripts, synthesize results.**
+
+
+## ✅ Final Quality Gate (NEW)
+
+Before declaring orchestration complete, run weighted quality gate:
+
+```bash
+python .agent/scripts/quality_gate.py   --input .agent/quality/sample.json   --profile orchestrate   --thresholds .agent/quality/thresholds.json
+```
+
+If gate fails, report blockers and required remediations.
