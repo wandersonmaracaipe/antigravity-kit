@@ -65,6 +65,16 @@ Before any coding, answer:
 
 → If any of these are unclear → **ASK USER**
 
+### Laravel Efficiency Rule (MANDATORY)
+
+For Laravel requests, prefer framework-aware discovery first:
+
+- Use `python .agent/scripts/laravel_map.py --root <path>` to identify structure/controllers quickly.
+- Read canonical paths directly (`app/Http/Controllers`, `routes/api.php`, `routes/web.php`).
+- Use `php artisan` commands when needed.
+
+Avoid defaulting to ad-hoc PowerShell/regex discovery loops (high token cost, low signal), unless the user explicitly asks for that approach.
+
 ### Phase 2: Tech Stack Decision
 
 Apply decision frameworks:
