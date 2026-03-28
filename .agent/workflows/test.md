@@ -142,3 +142,14 @@ describe('AuthService', () => {
 - **Descriptive test names**
 - **Arrange-Act-Assert pattern**
 - **Mock external dependencies**
+
+
+## ✅ Quality Gate (NEW)
+
+After test execution/generation, compute readiness score:
+
+```bash
+python .agent/scripts/quality_gate.py   --input .agent/quality/sample.json   --profile bugfix   --thresholds .agent/quality/thresholds.json
+```
+
+Use profile `feature` when generating a new feature test suite.

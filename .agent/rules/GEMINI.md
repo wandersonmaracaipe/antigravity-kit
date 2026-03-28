@@ -57,6 +57,19 @@ Agent activated → Check frontmatter "skills:" → Read SKILL.md (INDEX) → Re
 
 ### Response Format (MANDATORY)
 
+### Natural Language First (NO slash required)
+
+Default interaction is plain language:
+- User can type only what they need (no `/plan`, `/create`, etc.)
+- System must auto-route using `routing_score.py` and agent protocols
+- Slash commands are optional shortcuts, not required UX
+
+Decision hint:
+```bash
+python .agent/scripts/routing_score.py "<user request>"
+```
+
+
 When auto-applying an agent, inform the user:
 
 ```markdown
@@ -94,6 +107,21 @@ When auto-applying an agent, inform the user:
 ---
 
 ## TIER 0: UNIVERSAL RULES (Always Active)
+
+### 📏 Token Budget & Output Limits (NEW - MANDATORY)
+
+To avoid runtime failures like `"The model's generation exceeded the maximum output token limit"`:
+
+1. **Default concise mode:** Prefer compact answers unless user explicitly asks for deep detail.
+2. **Hard output cap:** Target **<= 700 tokens** per response by default.
+3. **Chunking rule:** If full answer may exceed cap, return:
+   - Part 1: executive summary + highest-priority actions
+   - Ask: `"Continue with part 2?"` before sending more
+4. **No long boilerplate:** Avoid repeating agent/routing explanations unless needed for correctness.
+5. **Code diffs over full files:** When possible, share minimal patch/snippet only.
+6. **List compression:** Use top 3-7 bullets, not exhaustive dumps.
+
+**Priority exception:** If user explicitly requests exhaustive output, provide it in numbered parts (Part 1/N, 2/N, ...).
 
 ### 🌐 Language Handling
 
@@ -198,7 +226,7 @@ When user's prompt is NOT in English:
 - **Completion:** A task is NOT finished until `checklist.py` returns success.
 - **Reporting:** If it fails, fix the **Critical** blockers first (Security/Lint).
 
-**Available Scripts (12 total):**
+**Available Scripts (18 total):**
 
 | Script                     | Skill                 | When to Use         |
 | -------------------------- | --------------------- | ------------------- |
@@ -214,6 +242,12 @@ When user's prompt is NOT in English:
 | `mobile_audit.py`          | mobile-design         | After mobile change |
 | `lighthouse_audit.py`      | performance-profiling | Before deploy       |
 | `playwright_runner.py`     | webapp-testing        | Before deploy       |
+| `routing_score.py`         | scripts (master)      | Agent triage        |
+| `knowledge_manager.py`     | scripts (master)      | ADR/lesson memory   |
+| `quality_gate.py`          | scripts (master)      | Final release gate  |
+| `benchmark_runner.py`      | scripts (master)      | Scenario benchmark  |
+| `critic_refiner.py`        | scripts (master)      | Remediation planner |
+| `release_gold_gate.py`     | scripts (master)      | Final chained gate  |
 
 > 🔴 **Agents & Skills can invoke ANY script** via `python .agent/skills/<skill>/scripts/<script>.py`
 
