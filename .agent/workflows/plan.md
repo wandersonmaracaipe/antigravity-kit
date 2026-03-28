@@ -15,7 +15,7 @@ $ARGUMENTS
 Before invoking planner, score request clarity:
 
 ```bash
-python .agent/scripts/routing_score.py "$ARGUMENTS" --max-questions 1
+python .agent/scripts/routing_score.py "$ARGUMENTS"
 ```
 
 If output has `needs_clarification: true`, ask 1-2 focused questions before generating plan.

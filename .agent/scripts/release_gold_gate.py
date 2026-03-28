@@ -14,16 +14,9 @@ import subprocess
 from pathlib import Path
 
 
-def _trim(text: str, max_chars: int) -> str:
-    if max_chars <= 0 or len(text) <= max_chars:
-        return text
-    return f"{text[:max_chars]}... [truncated {len(text) - max_chars} chars]"
-
-
-def run(cmd: list[str], max_output_chars: int) -> tuple[int, str]:
+def run(cmd: list[str]) -> tuple[int, str]:
     result = subprocess.run(cmd, capture_output=True, text=True, check=False)
-    raw = (result.stdout or result.stderr).strip()
-    return result.returncode, _trim(raw, max_output_chars)
+    return result.returncode, (result.stdout or result.stderr).strip()
 
 
 def main() -> int:
@@ -33,12 +26,11 @@ def main() -> int:
     parser.add_argument("--thresholds", default=".agent/quality/thresholds.json")
     parser.add_argument("--profile", default="feature", choices=["bugfix", "feature", "deploy", "orchestrate"])
     parser.add_argument("--report", default=".agent/benchmarks/report.json")
-    parser.add_argument("--max-output-chars", type=int, default=500, help="Trim nested check outputs to reduce token usage")
     args = parser.parse_args()
 
     checks = []
 
-    code, out = run(["python", ".agent/scripts/integrity_audit.py"], args.max_output_chars)
+    code, out = run(["python", ".agent/scripts/integrity_audit.py"])
     checks.append({"check": "integrity", "passed": code == 0, "output": out})
 
     code, out = run([
@@ -47,7 +39,7 @@ def main() -> int:
         "--quality-input", args.quality_input,
         "--thresholds", args.thresholds,
         "--out", args.report,
-    ], args.max_output_chars)
+    ])
     checks.append({"check": "benchmark", "passed": code == 0, "output": out})
 
     code, out = run([
@@ -55,7 +47,7 @@ def main() -> int:
         "--input", args.quality_input,
         "--profile", args.profile,
         "--thresholds", args.thresholds,
-    ], args.max_output_chars)
+    ])
     checks.append({"check": "quality_gate", "passed": code == 0, "output": out})
 
     summary = {

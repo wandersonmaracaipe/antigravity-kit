@@ -43,7 +43,7 @@ $ARGUMENTS
 Run routing confidence before selecting agents:
 
 ```bash
-python .agent/scripts/routing_score.py "$ARGUMENTS" --max-questions 1
+python .agent/scripts/routing_score.py "$ARGUMENTS"
 ```
 
 Policy:
@@ -264,7 +264,6 @@ Before declaring orchestration complete, run weighted quality gate:
 
 ```bash
 python .agent/scripts/quality_gate.py   --input .agent/quality/sample.json   --profile orchestrate   --thresholds .agent/quality/thresholds.json
-python .agent/scripts/release_gold_gate.py --profile orchestrate --max-output-chars 350
 ```
 
 If gate fails, report blockers and required remediations.

@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from dataclasses import dataclass
 
 
@@ -74,7 +75,7 @@ def suggest_workflow(request_type: str, multi_domain: bool) -> str:
     return "/plan" if multi_domain else "direct-answer"
 
 
-def build_clarifying_questions(multi_domain: bool, request_type: str, selected_agents: list[str], max_questions: int) -> list[str]:
+def build_clarifying_questions(multi_domain: bool, request_type: str, selected_agents: list[str]) -> list[str]:
     qs: list[str] = []
     if request_type == "new_feature":
         qs.append("Qual é o objetivo principal e o escopo mínimo desta entrega?")
@@ -84,10 +85,10 @@ def build_clarifying_questions(multi_domain: bool, request_type: str, selected_a
         qs.append("O alvo é iOS, Android ou ambos?")
     if multi_domain:
         qs.append("Qual prioridade: velocidade, qualidade, segurança ou prazo?")
-    return qs[: max(max_questions, 0)]
+    return qs[:3]
 
 
-def score_text(text: str, max_questions: int = 2, include_debug: bool = False) -> dict:
+def score_text(text: str) -> dict:
     tokens = tokenize(text)
     joined = " ".join(tokens)
     domain_scores: dict[str, float] = {}
@@ -109,7 +110,9 @@ def score_text(text: str, max_questions: int = 2, include_debug: bool = False) -
             "selected_agents": [],
             "confidence": 0.0,
             "needs_clarification": True,
+            "clarifying_questions": ["Pode detalhar melhor o objetivo e o resultado esperado?"],
             "suggested_workflow": "direct-answer",
+            "rationale": "No strong domain match detected.",
         }
 
     ranked = sorted(agent_scores.items(), key=lambda x: x[1], reverse=True)
@@ -129,32 +132,24 @@ def score_text(text: str, max_questions: int = 2, include_debug: bool = False) -
         else "Routing confidence acceptable."
     )
 
-    result = {
+    return {
         "request_type": request_type,
         "selected_agents": selected,
         "confidence": confidence,
         "needs_clarification": needs_clarification,
+        "clarifying_questions": build_clarifying_questions(multi_domain, request_type, selected),
         "suggested_workflow": suggest_workflow(request_type, multi_domain),
+        "rationale": rationale,
+        "domain_scores": domain_scores,
     }
-    if needs_clarification:
-        result["clarifying_questions"] = build_clarifying_questions(multi_domain, request_type, selected, max_questions)
-    if include_debug:
-        result["rationale"] = rationale
-        result["domain_scores"] = domain_scores
-    return result
 
 
 def main() -> int:
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Score request and suggest best agent/workflow")
-    parser.add_argument("request", nargs="+", help="User request text")
-    parser.add_argument("--max-questions", type=int, default=2, help="Max clarifying questions in output")
-    parser.add_argument("--verbose", action="store_true", help="Include rationale/domain_scores debug fields")
-    args = parser.parse_args()
-
-    text = " ".join(args.request).strip()
-    print(json.dumps(score_text(text, max_questions=args.max_questions, include_debug=args.verbose), indent=2, ensure_ascii=False))
+    if len(sys.argv) < 2:
+        print("Usage: python .agent/scripts/routing_score.py \"<user request>\"")
+        return 1
+    text = " ".join(sys.argv[1:]).strip()
+    print(json.dumps(score_text(text), indent=2, ensure_ascii=False))
     return 0
 
 

@@ -64,7 +64,7 @@ Use defaults, add details later.
 ### 1) Route confidence first
 
 ```bash
-python .agent/scripts/routing_score.py "$ARGUMENTS" --max-questions 1
+python .agent/scripts/routing_score.py "$ARGUMENTS"
 ```
 
 ### 2) Log key architecture decision (ADR)

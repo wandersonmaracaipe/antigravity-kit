@@ -87,4 +87,4 @@ Status uses these scripts:
 
 - `python .agent/scripts/benchmark_runner.py --tasks .agent/benchmarks/tasks.json --quality-input .agent/quality/sample.json --thresholds .agent/quality/thresholds.json --out .agent/benchmarks/report.json`
 
-- `python .agent/scripts/release_gold_gate.py --profile feature --max-output-chars 350`
+- `python .agent/scripts/release_gold_gate.py --profile feature`
